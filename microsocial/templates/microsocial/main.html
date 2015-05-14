@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+    <p>Main page</p>
+    <a href="{% url 'registration' %}">registration</a>
+    <a href="{% url 'login' %}">login</a>
+    <a href="{% url 'password-recovery' %}">password-recovery</a>
+    <a href="{% url 'profile' %}">profile</a>
+{% endblock %}

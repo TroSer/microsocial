@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'microsocial',
+    'person',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -98,4 +99,8 @@ PASSWORD_HASHERS = (
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
+)
+
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates'),
 )
