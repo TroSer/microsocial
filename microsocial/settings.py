@@ -37,6 +37,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
     'microsocial',
     'person',
 )
@@ -56,7 +58,7 @@ ROOT_URLCONF = 'microsocial.urls'
 
 WSGI_APPLICATION = 'microsocial.wsgi.application'
 
-
+SITE_ID = 1
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
