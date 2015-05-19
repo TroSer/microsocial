@@ -1,8 +1,13 @@
-{% load flatpages %}<p class="text-muted text-center margin">
+{% load flatpages %}
+<div class="container">
+    <p class="text-center margin flatpages">
     {% get_flatpages as flatpages %}
         {% for page in flatpages %}
             <a href="{{ page.url }}">{{ page.title }}</a> |
         {% endfor %}
-    {% now 'Y' %} &copy;
+    </p>
+    <p class="text-center text-muted margin">
+        {% now 'Y' %} &copy; Microsocial
+    </p>
+</div>
 
-</p>

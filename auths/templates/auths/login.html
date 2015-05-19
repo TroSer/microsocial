@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% load i18n %}
+
+{% block content %}
+    login
+    <a href="{% url 'password_recovery' %}">{% trans 'забыли пароль?'|capfirst %}</a>
+    <a href="{% url 'registration' %}">{% trans 'регистрация'|capfirst %}</a>
+{% endblock %}

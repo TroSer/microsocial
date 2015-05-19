@@ -1,1 +1,5 @@
-__author__ = 'troser'
+
+def main(request):
+    return{
+        'DEFAULT_TITLE': 'Microsocial',
+    }

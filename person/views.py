@@ -1,3 +1,6 @@
-from django.shortcuts import render
+# coding=utf-8
+from django.views.generic import TemplateView
 
-# Create your views here.
+
+class PersonProfileView(TemplateView):
+    template_name = 'person/profile.html'

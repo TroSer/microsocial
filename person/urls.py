@@ -1,7 +1,7 @@
 from django.conf.urls import url
-from django.views.generic import TemplateView
+from person import views
 
 
 urlpatterns = [
-    url(r'^profile/$', TemplateView.as_view(template_name='person/profile.html'), name='profile'),
+    url(r'^profile/(?P<person_id>\d+)/$', views.PersonProfileView.as_view(), name='profile'),
 ]

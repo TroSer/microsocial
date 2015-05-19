@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.flatpages',
     'microsocial',
     'person',
+    'auths',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -95,7 +96,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = 'microsocial.User'
+AUTH_USER_MODEL = 'person.User'
 
 PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
@@ -115,6 +116,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.static',
     'django.core.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
+    'microsocial.context_processors.main',
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -128,3 +130,5 @@ TEMPLATE_DIRS = (
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
+
+LOGIN_URL = 'login'

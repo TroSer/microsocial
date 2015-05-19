@@ -1,9 +1,12 @@
-{% load i18n %}
-<nav class="navbar navbar-default">
-    <div class="navbar-header">
-        <a class="navbar-brand" href="{% url 'main' %}">logo</a>
+{% load static i18n %}
+<div class="row">
+    <div class="col-xs-4">
+        <a href="{% url 'main'%}"><img class="img-responsive" src="{% static 'microsocial/img/logo.jpg' %}"></a>
     </div>
-    <div class="collapse navbar-collapse" id="navbar-collapse">
+    <div class="col-xs-6">
+
+    </div>
+    <div class="col-xs-2 text-right">
         <div class ="nav navbar-right" style="padding: 14px;">
                 <form action="{% url 'set_language' %}" method="post">
                     <input name="next" type="hidden" value="{{ redirect_to }}">
@@ -16,6 +19,6 @@
                        onclick="$('#set_lang_code').val('{{ language.code }}').closest('form').submit(); return false;">
                         {{ language.code }}</a>
                 {% endfor %}
-            </div>
+        </div>
     </div>
-</nav>
+</div>
