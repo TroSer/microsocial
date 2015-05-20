@@ -2,7 +2,7 @@
 from django import forms
 from microsocial.forms import BootstrapFormMixin
 from person.models import User
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _, ugettext
 
 
 class RegistrationForm(forms.ModelForm, BootstrapFormMixin):
@@ -16,3 +16,23 @@ class RegistrationForm(forms.ModelForm, BootstrapFormMixin):
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
         BootstrapFormMixin.__init__(self)
+
+    def clean(self):
+        data = super(RegistrationForm, self).clean()
+        if 'password1' not in self.errors and 'password2' not in self.errors:
+            if data['password1'] != data['password2']:
+                self.add_error('password1', ugettext(u'Пароли не совпадают.'))
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError(ugettext(u'Пользователь с таким email уже существует.'))
+        return email
+
+    def save(self, commit=True):
+        user = super(RegistrationForm, self).save(commit=False)
+        user.set_password(self.cleaned_data['password1'])
+        user.confirmed_registration = False
+        if commit:
+            user.save()
+        return user
