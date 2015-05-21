@@ -78,7 +78,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     def send_registration_email(self):
         url = 'http://{}{}'.format(
             Site.objects.get_current().domain,
-            reverse('registration_confirm', kwargs={'token': Signer(salt='registration_confirm').sign(self.pk)})
+            reverse('registration_confirm', kwargs={'token': Signer(salt='registration-confirm').sign(self.pk)})
         )
         self.email_user(
             ugettext(u'Подтвердите регистрацию на Microsocial'),

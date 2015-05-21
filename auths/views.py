@@ -1,10 +1,14 @@
+# coding=utf-8
+from django.contrib import messages
+from django.core.signing import Signer, BadSignature
 from django.core.urlresolvers import reverse_lazy
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.views.generic.base import TemplateView, RedirectView
 from auths.forms import RegistrationForm
 from microsocial import settings
 from person.models import User
-
+from django.utils.translation import ugettext_lazy as _
 
 def login_view(request):
     return render(request, 'auths/login.html')
@@ -38,6 +42,22 @@ class RegistrationView(TemplateView):
 class RegistrationConfirmView(RedirectView):
     url = reverse_lazy(settings.LOGIN_URL)
     permanent = False
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated():
+            raise Http404
+        try:
+            user_id = Signer(salt='registration-confirm').unsign(kwargs['token'])
+        except BadSignature:
+            raise Http404
+        user = User.objects.get(pk=user_id)
+        if user.confirmed_registration:
+            raise Http404
+        user.confirmed_registration = True
+        user.save(update_fields=('confirmed_registration',))
+        messages.success(request, _(u'Регистрация успешно подтверждена.'))
+        return super(RegistrationConfirmView, self).dispatch(request, *args, **kwargs)
+
 
 class PasswordRecoveryView(TemplateView):
     template_name = 'auths/password-recovery.html'
