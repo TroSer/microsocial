@@ -1,9 +1,27 @@
 {% extends 'base.html' %}
 
-{% load i18n %}
+{% load i18n microsocial %}
 
 {% block content %}
-    login
+   
+<form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+{% csrf_token %}
+{% for field in form %}
+                    {% show_form_field_errors field.errors 'col-sm-offset-4 col-sm-8' %}
+                    <div class="form-group{% if field.errors %} has-error{% endif %}">
+                        <label for="{{ field.id_for_label }}" class="control-label col-sm-4">
+                            {{ field.label|capfirst }}:
+                        </label>
+                        <div class="col-sm-8">
+                            {{ field }}
+                        </div>
+                    </div>
+{% endfor %}
+
+<input type="submit" value="login" />
+<input type="hidden" name="next" value="/" />
+</form>
+
     <a href="{% url 'password_recovery' %}">{% trans 'забыли пароль?'|capfirst %}</a>
     <a href="{% url 'registration' %}">{% trans 'регистрация'|capfirst %}</a>
 {% endblock %}
