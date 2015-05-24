@@ -7,7 +7,7 @@ from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect, render_to_response
 from django.template import RequestContext
 from django.views.generic.base import TemplateView, RedirectView
-from auths.forms import RegistrationForm
+from auths.forms import RegistrationForm, PasswordRecoveryForm
 from microsocial import settings
 from person.models import User
 from django.utils.translation import ugettext_lazy as _
@@ -91,3 +91,10 @@ class RegistrationConfirmView(RedirectView):
 
 class PasswordRecoveryView(TemplateView):
     template_name = 'auths/password-recovery.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.form = PasswordRecoveryForm(request.POST or None)
+        return super(PasswordRecoveryView, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.get(request, *args, **kwargs)

@@ -36,3 +36,10 @@ class RegistrationForm(forms.ModelForm, BootstrapFormMixin):
         if commit:
             user.save()
         return user
+
+
+class PasswordRecoveryForm(forms.ModelForm, BootstrapFormMixin):
+
+    class Meta:
+        model = User
+        fields = ['email']

@@ -3,8 +3,8 @@
     <div class="col-xs-4">
         <a href="{% url 'main'%}"><img class="img-responsive" src="{% static 'microsocial/img/logo.jpg' %}"></a>
     </div>
-    <div class="col-xs-6">
-
+    <div class="col-xs-6 text-right" style="padding: 14px;">
+        <a href="{% url 'logout'%}">{% trans 'выход'|capfirst %}</a>
     </div>
     <div class="col-xs-2 text-right">
         <div class ="nav navbar-right" style="padding: 14px;">
@@ -20,5 +20,6 @@
                         {{ language.code }}</a>
                 {% endfor %}
         </div>
+
     </div>
 </div>
