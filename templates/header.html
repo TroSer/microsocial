@@ -3,8 +3,8 @@
     <div class="col-xs-4">
         <a href="{% url 'main'%}"><img class="img-responsive" src="{% static 'microsocial/img/logo.jpg' %}"></a>
     </div>
-    <div class="col-xs-6 text-right" style="padding: 14px;">
-        <a href="{% url 'logout'%}">{% trans 'выход'|capfirst %}</a>
+    <div class="col-xs-6">
+
     </div>
     <div class="col-xs-2 text-right">
         <div class ="nav navbar-right" style="padding: 14px;">
@@ -19,6 +19,11 @@
                        onclick="$('#set_lang_code').val('{{ language.code }}').closest('form').submit(); return false;">
                         {{ language.code }}</a>
                 {% endfor %}
+        {% if user.is_authenticated %}
+            <p style="margin-top: 14px;">
+                <a href="{% url 'logout'%}">{% trans 'выход'|capfirst %}</a>
+            </p>
+        {% endif %}
         </div>
 
     </div>

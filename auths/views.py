@@ -17,36 +17,10 @@ def login_view(request):
     if request.user.is_authenticated():
         return redirect('main')
     return login(request, 'auths/login.html', authentication_form=LoginForm)
-# def login_view(request):
-#     if request.user.is_authenticated():
-#         return redirect('main')
-#     response = login(request, 'auths/login.html')
-#     if request.user.is_authenticated():
-#         if 'remember_me' not in request.POST:
-#             request.session.set_expiry(0)
-#     return response
+
 #
 # def logout_view(request):
 #     return logout(request, next_page='login')
-
-#
-# def login_view(request):
-#     context = RequestContext(request)
-#     if request.method == 'POST':
-#         email = request.POST['email']
-#         password = request.POST['password']
-#         user = authenticate(email=email, password=password)
-#         if user:
-#             if user.is_activate:
-#                 login(request, user)
-#                 return HttpResponseRedirect('main')
-#             else:
-#                 return HttpResponse("Your account is disabled")
-#         else:
-#             return HttpResponse("Invalid login details")
-#     else:
-#         return render_to_response('auths/login.html', {}, context)
-        #return render(request, 'auths/login.html')
 
 
 class RegistrationView(TemplateView):
