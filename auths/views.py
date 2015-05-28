@@ -7,11 +7,16 @@ from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect, render_to_response
 from django.template import RequestContext
 from django.views.generic.base import TemplateView, RedirectView
-from auths.forms import RegistrationForm, PasswordRecoveryForm
+from auths.forms import RegistrationForm, PasswordRecoveryForm, LoginForm
 from microsocial import settings
 from person.models import User
 from django.utils.translation import ugettext_lazy as _
 
+
+def login_view(request):
+    if request.user.is_authenticated():
+        return redirect('main')
+    return login(request, 'auths/login.html', authentication_form=LoginForm)
 # def login_view(request):
 #     if request.user.is_authenticated():
 #         return redirect('main')
