@@ -72,8 +72,22 @@ class PasswordRecoveryView(TemplateView):
     template_name = 'auths/password-recovery.html'
 
     def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated():
+            return redirect('main')
         self.form = PasswordRecoveryForm(request.POST or None)
         return super(PasswordRecoveryView, self).dispatch(request, *args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super(PasswordRecoveryView, self).get_context_data(**kwargs)
+        context['form'] = self.form
+        if 'pwd_recovery_user_id' in self.request.session:
+            context['pwd_recovery_user'] = User.objects.get(pk=self.request.session.pop('pwd_recovery_user_id'))
+        return context
+
     def post(self, request, *args, **kwargs):
+        if self.form.is_valid():
+            user = self.form.get_user()
+            #todo send mail
+            request.session['pwd_recovery_user_id'] = user.pk
+            return redirect(request.path)
         return self.get(request, *args, **kwargs)

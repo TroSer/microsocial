@@ -54,8 +54,22 @@ class LoginForm(AuthenticationForm, BootstrapFormMixin):
             self._errors.clear()
             raise forms.ValidationError(ugettext(u'Неправильный email или пароль.'))
 
-class PasswordRecoveryForm(forms.ModelForm, BootstrapFormMixin):
 
-    class Meta:
-        model = User
-        fields = ['email']
+class PasswordRecoveryForm(forms.Form, BootstrapFormMixin):
+    email = forms.EmailField(label=_(u'email'))
+
+    def __init__(self, *args, **kwargs):
+        super(PasswordRecoveryForm, self).__init__(*args, **kwargs)
+        BootstrapFormMixin.__init__(self)
+        self._user = None
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        try:
+            self._user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            raise forms.ValidationError(_(u'Пользователь с таким email не существует.'))
+        return email
+
+    def get_user(self):
+        return self._user
