@@ -18,4 +18,9 @@ urlpatterns = [
     url(r'^registration/$', views.RegistrationView.as_view(), name='registration'),
     url(r'^registration/(?P<token>.+)$', views.RegistrationConfirmView.as_view(), name='registration_confirm'),
     url(r'^password-recovery/$', views.PasswordRecoveryView.as_view(), name='password_recovery'),
+    url(
+        r'^password-recovery/(?P<token>.+)$',
+        views.PasswordRecoveryConfirmView.as_view(),
+        name='password_recovery_confirm'
+    ),
 ]

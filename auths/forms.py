@@ -1,6 +1,7 @@
 # coding=utf-8
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, SetPasswordForm
+from django.core import validators
 from microsocial.forms import BootstrapFormMixin
 from person.models import User
 from django.utils.translation import ugettext_lazy as _, ugettext
@@ -73,3 +74,12 @@ class PasswordRecoveryForm(forms.Form, BootstrapFormMixin):
 
     def get_user(self):
         return self._user
+
+
+class NewPasswordForm(SetPasswordForm, BootstrapFormMixin):
+    def __init__(self, *args, **kwargs):
+        super(NewPasswordForm, self).__init__(*args, **kwargs)
+        BootstrapFormMixin.__init__(self)
+        for field_name in ('new_password1', 'new_password2'):
+            self.fields[field_name].validators.extend([validators.MinLengthValidator(6),
+                                                      validators.MaxLengthValidator(40)])
