@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.flatpages.views import flatpage
@@ -8,11 +9,7 @@ from microsocial import views
 
 
 urlpatterns = [
-    #url(r'^$', TemplateView.as_view(template_name='microsocial/main.html'), name='main'),
     url(r'^$', views.main, name='main'),
-    #url(r'^registration/$', TemplateView.as_view(template_name='microsocial/registration.html'), name='registration'),
-    #url(r'^login/$', TemplateView.as_view(template_name='microsocial/login.html'), name='login'),
-    #url(r'^password-recovery/$', TemplateView.as_view(template_name='microsocial/password-recovery.html'), name='password-recovery'),
     url(r'', include('person.urls')),
     url(r'', include('auths.urls')),
     url(r'^(about/)$', flatpage, name='about'),
@@ -24,3 +21,7 @@ urlpatterns = [
     url(r'^i18n/setlang/$', csrf_exempt(set_language), name='set_language'),
     url(r'^admin/', include(admin.site.urls)),
 ]
+
+if settings.DEBUG:
+    from django.conf.urls.static import static
+    urlpatterns.extend(static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
