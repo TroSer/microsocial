@@ -115,7 +115,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ('first_name',)
 
-
     def get_full_name(self):
         return '{} {}'.format(self.first_name, self.last_name)
 
@@ -189,6 +188,7 @@ class FriendInvite(models.Model):
 
     class Meta:
         unique_together = ('from_user', 'to_user')
+
 
 class UserWallPost(models.Model):
     user = models.ForeignKey(User, verbose_name=_(u'владелец стены'), related_name='wall_posts')
